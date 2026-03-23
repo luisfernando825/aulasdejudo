@@ -329,9 +329,14 @@ export default function App() {
             </div>
           </div>
 
-          <button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white text-xl md:text-2xl font-black py-6 px-6 rounded-3xl shadow-2xl shadow-emerald-500/40 transition-all hover:scale-105 flex items-center justify-center gap-3 uppercase">
+          <a 
+            href="https://pay.wiapy.com/QBBIdXwrG4"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white text-xl md:text-2xl font-black py-6 px-6 rounded-3xl shadow-2xl shadow-emerald-500/40 transition-all hover:scale-105 flex items-center justify-center gap-3 uppercase"
+          >
             QUERO MEU ACESSO AGORA 🔥
-          </button>
+          </a>
           
           <p className="mt-6 text-slate-400 text-[10px] font-bold uppercase tracking-widest flex items-center justify-center gap-2">
             <ShieldCheck size={14} /> Ambiente 100% Seguro
@@ -434,12 +439,14 @@ export default function App() {
           <p className="text-slate-500 font-medium text-lg mb-10 leading-relaxed max-w-lg mx-auto">
             Você tem 7 dias inteiros para testar todo o material. Se por qualquer motivo você achar que o método não é para você, basta nos enviar um e-mail e devolvemos 100% do seu investimento. Sem perguntas e sem burocracia. O risco é todo nosso!
           </p>
-          <button 
-            onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+          <a 
+            href="https://pay.wiapy.com/QBBIdXwrG4"
+            target="_blank"
+            rel="noopener noreferrer"
             className="w-full bg-emerald-500 text-white font-black text-xl py-6 px-6 rounded-2xl shadow-lg hover:bg-emerald-600 transition-all hover:scale-105 flex items-center justify-center gap-3 uppercase"
           >
             QUERO MEU ACESSO AGORA 🔥
-          </button>
+          </a>
         </div>
       </section>
 
