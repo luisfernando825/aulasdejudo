@@ -25,7 +25,7 @@ function CountdownTimer() {
   return (
     <div className="bg-red-600 text-white py-3 px-6 rounded-full inline-flex items-center gap-3 font-black text-lg md:text-xl shadow-xl animate-pulse mb-8">
       <Clock size={24} />
-      OFERTA EXPIRA EM: {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
+      OFERTA EXPIRA EM: <span className="tabular-nums">{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}</span>
     </div>
   );
 }
@@ -51,34 +51,20 @@ function FAQItem({ question, answer }: { question: string, answer: string }) {
 }
 
 function VideoPlayer() {
-  const [isMounted, setIsMounted] = useState(false);
-
   useEffect(() => {
     // Carrega o script da VSL apenas após a renderização inicial da página
     // Isso evita bloqueio de renderização (melhora o LCP e TBT no PageSpeed)
-    const timer = setTimeout(() => {
-      setIsMounted(true);
-      const script = document.createElement('script');
-      script.src = 'https://app.litevideo.net/p.js';
-      script.async = true;
-      document.body.appendChild(script);
-    }, 1500);
-
-    return () => clearTimeout(timer);
+    const script = document.createElement('script');
+    script.src = 'https://app.litevideo.net/p.js';
+    script.async = true;
+    document.body.appendChild(script);
   }, []);
 
   return (
     <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-blue-600 mb-10 w-full max-w-[400px] mx-auto bg-slate-900 aspect-[9/16] flex items-center justify-center">
-      {isMounted ? (
-        <div className="w-full h-full" dangerouslySetInnerHTML={{ 
-          __html: '<lt-v2 v="67fd9526-720f-4ba1-bc50-3fb2e4e6147a" ar="9:16" p="ph=8&sc=0&pc=003cf0"></lt-v2>' 
-        }} />
-      ) : (
-        <div className="flex flex-col items-center justify-center text-slate-400">
-          <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
-          <span className="text-sm font-bold animate-pulse">Carregando vídeo...</span>
-        </div>
-      )}
+      <div className="w-full h-full" dangerouslySetInnerHTML={{ 
+        __html: '<lt-v2 v="67fd9526-720f-4ba1-bc50-3fb2e4e6147a" ar="9:16" p="ph=8&sc=0&pc=003cf0"></lt-v2>' 
+      }} />
     </div>
   );
 }
@@ -94,10 +80,10 @@ export default function App() {
 
       {/* Hero Section */}
       <section className="max-w-2xl mx-auto px-4 pt-16 pb-12 text-center">
-        <h1 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tight leading-[1.1] mb-6 uppercase">
+        <h1 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tight leading-[1.1] mb-6 uppercase">
           <span className="block text-blue-600">+500 AULAS</span>
           DE JUDÔ PRONTAS
-          <span className="block text-emerald-500 mt-2 md:mt-4 text-3xl md:text-5xl">+ 6 BÔNUS EXTRAS</span>
+          <span className="block text-emerald-500 mt-2 md:mt-4 text-4xl md:text-6xl">+ 6 BÔNUS EXTRAS</span>
         </h1>
         <p className="text-lg md:text-xl font-semibold text-slate-600 mb-10 max-w-lg mx-auto leading-tight">
           O método definitivo para dominar o tatame e fidelizar seus alunos.
@@ -107,7 +93,10 @@ export default function App() {
         <VideoPlayer />
 
         {/* CTA Button */}
-        <button className="w-full max-w-sm bg-emerald-500 hover:bg-emerald-600 text-white text-lg md:text-xl font-black py-4 px-6 rounded-full shadow-lg shadow-emerald-500/20 transition-all hover:-translate-y-1 flex items-center justify-center gap-3 mb-6 mx-auto uppercase">
+        <button 
+          onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+          className="w-full max-w-sm bg-emerald-500 hover:bg-emerald-600 text-white text-lg md:text-xl font-black py-4 px-6 rounded-full shadow-lg shadow-emerald-500/20 transition-all hover:-translate-y-1 flex items-center justify-center gap-3 mb-6 mx-auto uppercase"
+        >
           QUERO MEU ACESSO
         </button>
 
@@ -276,7 +265,7 @@ export default function App() {
       </div>
 
       {/* Pricing Section */}
-      <section className="max-w-2xl mx-auto px-4 py-20 text-center">
+      <section id="pricing" className="max-w-2xl mx-auto px-4 py-20 text-center">
         <CountdownTimer />
         <div className="bg-white rounded-[3.5rem] p-8 md:p-12 border-4 border-blue-600 shadow-2xl relative w-full overflow-hidden">
           {/* Top Badge */}
@@ -387,11 +376,11 @@ export default function App() {
               'https://i.imgur.com/q0ADEMK.png'
             ].map((src, i) => (
               <SwiperSlide key={i}>
-                <div className="bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 transition-transform h-full">
+                <div className="bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-100 transition-transform h-full aspect-[4/5] flex items-center justify-center relative">
                   <img 
                     src={src} 
                     alt={`Depoimento ${i + 1}`} 
-                    className="w-full h-auto object-contain"
+                    className="w-full h-full object-contain absolute inset-0"
                     referrerPolicy="no-referrer"
                     loading="lazy"
                     decoding="async"
@@ -434,7 +423,7 @@ export default function App() {
           <img 
             src="https://i.imgur.com/urfTmet.png" 
             alt="Garantia" 
-            className="w-full max-w-[300px] mx-auto mb-8 object-contain"
+            className="w-full max-w-[300px] aspect-square mx-auto mb-8 object-contain"
             referrerPolicy="no-referrer"
             loading="lazy"
             decoding="async"
@@ -445,7 +434,10 @@ export default function App() {
           <p className="text-slate-500 font-medium text-lg mb-10 leading-relaxed max-w-lg mx-auto">
             Você tem 7 dias inteiros para testar todo o material. Se por qualquer motivo você achar que o método não é para você, basta nos enviar um e-mail e devolvemos 100% do seu investimento. Sem perguntas e sem burocracia. O risco é todo nosso!
           </p>
-          <button className="w-full bg-emerald-500 text-white font-black text-xl py-6 px-6 rounded-2xl shadow-lg hover:bg-emerald-600 transition-all hover:scale-105 flex items-center justify-center gap-3 uppercase">
+          <button 
+            onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+            className="w-full bg-emerald-500 text-white font-black text-xl py-6 px-6 rounded-2xl shadow-lg hover:bg-emerald-600 transition-all hover:scale-105 flex items-center justify-center gap-3 uppercase"
+          >
             QUERO MEU ACESSO AGORA 🔥
           </button>
         </div>
