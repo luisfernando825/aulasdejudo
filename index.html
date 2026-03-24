@@ -6,6 +6,42 @@
     <title>My Google AI Studio App</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Fix for Utmify Pixel circular JSON error -->
+    <script>
+      const originalStringify = JSON.stringify;
+      JSON.stringify = function(value, replacer, space) {
+        try {
+          return originalStringify(value, replacer, space);
+        } catch (e) {
+          if (e.message && e.message.toLowerCase().includes('circular')) {
+            const cache = new Set();
+            return originalStringify(value, function(key, val) {
+              if (typeof val === 'object' && val !== null) {
+                if (val instanceof Node) return val.tagName || 'Node';
+                if (cache.has(val)) return '[Circular]';
+                cache.add(val);
+              }
+              if (Array.isArray(replacer)) {
+                if (key !== '' && !replacer.includes(key)) return undefined;
+              } else if (typeof replacer === 'function') {
+                return replacer.call(this, key, val);
+              }
+              return val;
+            }, space);
+          }
+          throw e;
+        }
+      };
+    </script>
+    <!-- Utmify Pixel -->
+    <script>
+      window.pixelId = "69c1d7465f60cfea9f71f615";
+      var a = document.createElement("script");
+      a.setAttribute("async", "");
+      a.setAttribute("defer", "");
+      a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+      document.head.appendChild(a);
+    </script>
   </head>
   <body>
     <div id="root"></div>
